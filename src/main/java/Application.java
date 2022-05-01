@@ -13,7 +13,7 @@ public class Application {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Media("D:\\software\\Microsoft_office\\OneDrive\\桌面\\my.mp4");
+                new MainPane("D:\\software\\Microsoft_office\\OneDrive\\桌面\\my.mp4");
             }
         });
     }

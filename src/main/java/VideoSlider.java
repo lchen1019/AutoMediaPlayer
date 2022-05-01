@@ -8,8 +8,8 @@ public class VideoSlider extends Slider{
 
     public VideoSlider(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
-        System.out.println("sdfdsfsdf");
         length = mediaPlayer.media().info().duration();
+        System.out.println(length);
         exp = 10000;
         setMaximum(exp);
         that = this;

@@ -1,6 +1,5 @@
 
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,11 +21,11 @@ public class ControlPanel extends JPanel {
 
     private MediaPlayer mediaPlayer;
     private boolean isPlay;
-    private Media media;
+    private MainPane media;
     private VoiceSlider voiceSlider;
-    public ControlPanel(Media media, MediaPlayer mediaPlayer, VoiceSlider voiceSlider) {
+    public ControlPanel(MainPane media, MediaPlayer mediaPlayer, VoiceSlider voiceSlider) {
         this.mediaPlayer = mediaPlayer;
-        this.isPlay = true;
+        this.isPlay = false;
         this.media = media;
         this.voiceSlider = voiceSlider;
         initComponents();
@@ -90,9 +89,6 @@ public class ControlPanel extends JPanel {
 
     private void initComponents() {
         setLayout(new BorderLayout());
-        String[] listData = new String[]{"香蕉", "雪梨", "苹果", "荔枝"};
-
-
 
         // 创建一个下拉列表框
         speed = new Choice();
@@ -102,7 +98,7 @@ public class ControlPanel extends JPanel {
         }
         speed.select(2);
         front = new JButton(">>");
-        start = new JButton("暂停");
+        start = new JButton("开始");
         back = new JButton("<<");
 
 
