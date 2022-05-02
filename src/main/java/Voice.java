@@ -35,14 +35,17 @@ public class Voice extends DynamicMedia {
 
         // 添加控制设置
         Box controlBox = Box.createVerticalBox();
-        controlBox.add(videoSlider);
-        controlBox.add(Box.createVerticalStrut(10));
-        controlBox.add(controlPanel);
+        Box upperBox = Box.createHorizontalBox();
+        upperBox.add(videoSlider);
+        upperBox.add(Box.createHorizontalStrut(1));
+        upperBox.add(new JLabel(calcTime(videoSlider.getLength())));
+        upperBox.add(Box.createHorizontalStrut(1));
+        controlBox.add(upperBox);
         controlBox.add(Box.createVerticalStrut(5));
+        controlBox.add(controlPanel);
         panel.add(controlBox, BorderLayout.SOUTH);
         panel.updateUI();
         panel.setVisible(true);
-        System.out.println(location);
         this.mainPane.repaint();
     }
 }

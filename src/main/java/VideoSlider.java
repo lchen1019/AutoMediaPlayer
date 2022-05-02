@@ -16,6 +16,10 @@ public class VideoSlider extends Slider{
         refreshThread = new RefreshThread();
     }
 
+    public long getLength() {
+        return length;
+    }
+
 
     // 每隔一秒刷新一次
     public void refresh() {
