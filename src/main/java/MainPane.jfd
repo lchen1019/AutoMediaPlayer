@@ -1,0 +1,38 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.12" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 800, 500 )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "menuBar1"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu1"
+					"text": "文件"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "openFile"
+						"text": "打开"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "openFileActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "historyBar"
+						"text": "历史记录"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "historyActionPerformed", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "historyBarActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "settings"
+						"text": "设置"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "settingsActionPerformed", true ) )
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 115, 145 )
+			"size": new java.awt.Dimension( 605, 380 )
+		} )
+	}
+}
+

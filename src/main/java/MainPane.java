@@ -6,10 +6,6 @@ import java.awt.event.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BaseMultiResolutionImage;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.util.Objects;
 import javax.swing.*;
 
 
@@ -30,25 +26,19 @@ public class MainPane extends JFrame {
     }
 
     public MainPane() {
-        Image image= Toolkit.getDefaultToolkit()
-                .getImage(StartPane.class.getClassLoader().getResource(ConfigValue.app_icon));
+        Image image= Toolkit.getDefaultToolkit().getImage(HistoryPane.class.getClassLoader().getResource(ConfigValue.app_icon));
         this.setIconImage(image);
-        initComponents();
         setLocationRelativeTo(null);
+        initComponents();
         setTitle("Media Player");
         history=new History();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         panel = new JPanel(new BorderLayout());
         getContentPane().add(panel);
-        ImageIcon image1=new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.start_icon));
+        ImageIcon image1=new ImageIcon(HistoryPane.class.getClassLoader().getResource(ConfigValue.start_icon));
         JLabel label=new JLabel(image1);
         panel.add(label, BorderLayout.CENTER);
-
-
-      //  System.out.println(StartPane.class.getClassLoader().getResource(ConfigValue.bg_start).getPath().substring(1));
-      //  mediaPlayerComponent.mediaPlayer().media().start(StartPane.class.getClassLoader().getResource(ConfigValue.bg_start).getPath());
-        //mediaPlayerComponent.mediaPlayer().media().start("E:\\作业\\AutoMediaPlayer\\src\\resource\\bg_start.jpg");
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -74,6 +64,7 @@ public class MainPane extends JFrame {
         System.out.println(path);
         play(path);
     }
+
    private void play(String path){
        Media media = null;
        time=0;
@@ -98,12 +89,26 @@ public class MainPane extends JFrame {
        media.play();
    }
 
+
+   private void historyBarActionPerformed(ActionEvent e) {
+        new HistoryPane(this);
+   }
+
+   private void settingsActionPerformed(ActionEvent e) {
+        new SettingsPane(this);
+   }
+
+   private void historyActionPerformed(ActionEvent e) {
+       // TODO add your code here
+   }
+
     private void initComponents() {
 
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
         menu1 = new JMenu();
         openFile = new JMenuItem();
+        historyBar = new JMenuItem();
         settings = new JMenuItem();
 
         //======== this ========
@@ -117,23 +122,28 @@ public class MainPane extends JFrame {
             //======== menu1 ========
             {
                 menu1.setText("\u6587\u4ef6");
-                System.out.println(StartPane.class.getClassLoader().getResource(ConfigValue.file_icon));
-                menu1.setIcon(new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.file_icon)));
+
                 //---- openFile ----
                 openFile.setText("\u6253\u5f00");
                 openFile.addActionListener(e -> openFileActionPerformed(e));
                 menu1.add(openFile);
-                openFile.setIcon(new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.file_icon)));
+
+                //---- historyBar ----
+                historyBar.setText("\u5386\u53f2\u8bb0\u5f55");
+                historyBar.addActionListener(e -> {
+			historyActionPerformed(e);
+			historyBarActionPerformed(e);
+		});
+                menu1.add(historyBar);
+
                 //---- settings ----
                 settings.setText("\u8bbe\u7f6e");
-                settings.setIcon(new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.setting_icon)));
+                settings.addActionListener(e -> settingsActionPerformed(e));
                 menu1.add(settings);
             }
             menuBar1.add(menu1);
         }
-
-        menuBar1.setPreferredSize(new Dimension( getWidth(),30));
-        add(menuBar1,BorderLayout.NORTH);
+        setJMenuBar(menuBar1);
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -143,6 +153,7 @@ public class MainPane extends JFrame {
     private JMenuBar menuBar1;
     private JMenu menu1;
     private JMenuItem openFile;
+    private JMenuItem historyBar;
     private JMenuItem settings;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

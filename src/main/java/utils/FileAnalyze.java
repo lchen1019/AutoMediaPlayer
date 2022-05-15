@@ -70,10 +70,10 @@ public class FileAnalyze {
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("voice("+voice.substring(0,voice.length()-1)+")" ,voiceSuffix));
         //如果用户没做选择返回null
 
-        if( 1==chooser.showOpenDialog(parent))
-        {   JOptionPane.showMessageDialog(parent,
-                "未选择");
-            return null; }
+        if(1 == chooser.showOpenDialog(parent)) {
+            JOptionPane.showMessageDialog(parent, "未选择");
+            return null;
+        }
         String path = chooser.getSelectedFile().getAbsolutePath();
         return path;
     }

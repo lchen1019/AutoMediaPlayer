@@ -4,7 +4,6 @@ import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 
 import javax.swing.*;
-import java.awt.*;
 
 // 程序入口
 public class Application {
@@ -14,6 +13,8 @@ public class Application {
         FlatLightLaf.setup();
         new NativeDiscovery().discover();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),ConfigValue.VLCPath);
+        // 初始化默认设置
+        Initialization initialization = new Initialization();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

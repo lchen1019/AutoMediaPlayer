@@ -42,7 +42,7 @@ public class Voice extends DynamicMedia {
         new HistoryThread().start();
         panel.removeAll();
         JLabel label = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.music_icon));
+        ImageIcon imageIcon = new ImageIcon(HistoryPane.class.getClassLoader().getResource(ConfigValue.music_icon));
         label.setIcon(imageIcon);
         panel.add(label, BorderLayout.CENTER);
 
