@@ -1,7 +1,10 @@
 import com.formdev.flatlaf.FlatLightLaf;
+import com.sun.jna.NativeLibrary;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 
 import javax.swing.*;
+import java.awt.*;
 
 // 程序入口
 public class Application {
@@ -10,10 +13,11 @@ public class Application {
     public static void main(String[] args) {
         FlatLightLaf.setup();
         new NativeDiscovery().discover();
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(),ConfigValue.VLCPath);
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainPane("D:\\software\\Microsoft_office\\OneDrive\\桌面\\my.mp4");
+                new MainPane();
             }
         });
     }

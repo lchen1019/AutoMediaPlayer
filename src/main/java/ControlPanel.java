@@ -59,6 +59,8 @@ public class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 media.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                media.getGraphicsConfiguration().getDevice()
+                        .setFullScreenWindow(media);
                 media.setLocationRelativeTo(null);
                 media.setUndecorated(true);
                 media.setAlwaysOnTop(true);
@@ -70,6 +72,7 @@ public class ControlPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 media.setBounds(new Rectangle(800, 500));
                 media.setLocationRelativeTo(null);
+                media.setUndecorated(false);
                 media.setResizable(true);
             }
         });

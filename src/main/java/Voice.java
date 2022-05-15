@@ -27,9 +27,22 @@ public class Voice extends DynamicMedia {
         videoSlider.init();
         voiceSlider.init();
         videoSlider.refresh();
+        class HistoryThread extends Thread{
+            @Override
+            public synchronized void run() {
+                while(true) {
+                    try {
+                        mainPane.setTime( videoSlider.getCurTime());
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }}
+        new HistoryThread().start();
         panel.removeAll();
         JLabel label = new JLabel();
-        ImageIcon imageIcon = new ImageIcon("D:\\software\\Microsoft_office\\OneDrive\\桌面\\my.jpg");
+        ImageIcon imageIcon = new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.music_icon));
         label.setIcon(imageIcon);
         panel.add(label, BorderLayout.CENTER);
 

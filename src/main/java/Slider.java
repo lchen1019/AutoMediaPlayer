@@ -10,7 +10,6 @@ public abstract class Slider extends JSlider {
     protected int initialValue;
     protected MediaPlayer mediaPlayer;
     protected int exp;
-
     public Slider(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
         initComponent();

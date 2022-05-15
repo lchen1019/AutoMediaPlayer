@@ -18,7 +18,6 @@ public class VoiceSlider extends Slider{
     public void doResponse(int value) {
         mediaPlayer.audio().setVolume(value);
     }
-
     @Override
     public void init() {
         this.setValue(50);
