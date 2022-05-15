@@ -20,7 +20,8 @@ public class VoiceSlider extends Slider{
     }
     @Override
     public void init() {
-        this.setValue(50);
+        this.setValue(Initialization.getSettings().getVolume());
+        doResponse(Initialization.getSettings().getVolume());
     }
 
 }

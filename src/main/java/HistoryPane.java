@@ -9,17 +9,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.RoundRectangle2D;
 import java.util.Vector;
 
-public class StartPane extends JFrame {
+public class HistoryPane extends JFrame {
     History history;
     String filePath;
-    StartPane(){
-        StartPane self=this;
+    private MainPane mainFrame;
+    HistoryPane(MainPane mainFrame,History history_o){
+        HistoryPane self=this;
+        this.mainFrame = mainFrame;
 
         //history处理
-        history=new History();
+        history=history_o;
         Vector<String> vector_his=history.getHistory();
         Vector<String> file_his=new Vector<>();
         for (String str:
@@ -42,9 +43,9 @@ public class StartPane extends JFrame {
         JList jList=new JList(file_his);
         JPanel jPanel=new JPanel();
         JButton btn1=new JButton("清除历史记录");
-        JButton btn2=new JButton("选择文件");
+        //JButton btn2=new JButton("选择文件");
         JButton btn3=new JButton("开始播放");
-        btn3.setIcon(new ImageIcon(StartPane.class.getClassLoader().getResource(ConfigValue.start1_icon)));
+        btn3.setIcon(new ImageIcon(HistoryPane.class.getClassLoader().getResource(ConfigValue.start1_icon)));
         jList.setLocation(20,50);
         jList.setSize(200,200);
         jScrollPane.setSize(200,200);
@@ -57,8 +58,8 @@ public class StartPane extends JFrame {
         jL2.setSize(210,150);
         btn1.setLocation(20,280);
         btn1.setSize(200,30);
-        btn2.setSize(200,30);
-        btn2.setLocation(250,50);
+   //     btn2.setSize(200,30);
+   //     btn2.setLocation(250,50);
         btn3.setLocation(250,250);
         btn3.setSize(200,40);
 
@@ -88,44 +89,52 @@ public class StartPane extends JFrame {
                 jList.setListData(file_his);
             }
         });
-        btn2.setBackground(new Color(80,160,240));
-        btn2.setForeground(Color.white);
-        btn2.addMouseListener(new MouseAdapter() {
+        btn3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-               String string=FileAnalyze.getFileFromChoose(self);
-               if(string!=null)
-               {
-                   jL2.setText("<html><body>您当前选择:<br/><div color=#00AEEC>"+string.substring(0,string.lastIndexOf("\\")+1)+
-                         "<br/>"  +string.substring(string.lastIndexOf("\\")+1)+"</div></body></html>");
-               }
+                mainFrame.play(filePath);
+                self.dispose();
             }
         });
+//        btn2.setBackground(new Color(80,160,240));
+//        btn2.setForeground(Color.white);
+//        btn2.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//               String string=FileAnalyze.getFileFromChoose(self);
+//               if(string!=null)
+//               {
+//                   jL2.setText("<html><body>您当前选择:<br/><div color=#00AEEC>"+string.substring(0,string.lastIndexOf("\\")+1)+
+//                         "<br/>"  +string.substring(string.lastIndexOf("\\")+1)+"</div></body></html>");
+//               }
+//            }
+//        });
         jScrollPane.setViewportView(jList);
         jPanel.add(jScrollPane);
 
-        addWindowListener(new WindowAdapter() {
+        btn3.addMouseListener(new MouseAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                history.flushToFile();
-                System.exit(0);
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
             }
         });
         add(btn3);
-        add(btn2);
+      //  add(btn2);
         add(jL1);
         add(jL2);
         add(btn1);
         getContentPane().add(jPanel);
         this.setLayout(null);
         this.setTitle("开始界面");
-        this.setSize(470,400);
-        this.setLocation(100,100);
+
         Image image= Toolkit.getDefaultToolkit()
-                .getImage(StartPane.class.getClassLoader().getResource(ConfigValue.app_icon));
+                .getImage(HistoryPane.class.getClassLoader().getResource(ConfigValue.app_icon));
         this.setIconImage(image);
         this.setResizable(false);
+        this.setSize(470,400);
+        setLocation(mainFrame.getX()+mainFrame.getWidth()/2-getWidth()/2,mainFrame.getY()+mainFrame.getHeight()/2-getHeight()/2);
         this.setVisible(true);
 
     }
