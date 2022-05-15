@@ -5,7 +5,7 @@ public class VideoSlider extends Slider{
     private long length;
     private RefreshThread refreshThread;
     private VideoSlider that;
-
+    private long curTime;
     public VideoSlider(MediaPlayer mediaPlayer) {
         super(mediaPlayer);
         length = mediaPlayer.media().info().duration();
@@ -31,7 +31,10 @@ public class VideoSlider extends Slider{
         public synchronized void run() {
             while(true) {
                 try {
-                    long curTime = mediaPlayer.status().time();
+                    if (mediaPlayer!=null&&mediaPlayer.status()!=null)
+                    curTime = mediaPlayer.status().time();
+                    else
+                        break;
                     that.setValue((int) ((double) curTime / length * exp));
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -40,9 +43,13 @@ public class VideoSlider extends Slider{
             }
         }
     }
-
+    public long  getCurTime()
+    {
+        return curTime;
+    }
     @Override
     public void doResponse(int value) {
+        curTime=value;
         mediaPlayer.controls().setTime((long) ((double) value / exp * length));
     }
 

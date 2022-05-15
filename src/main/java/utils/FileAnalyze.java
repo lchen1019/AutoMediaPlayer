@@ -1,5 +1,9 @@
 package utils;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+
 public class FileAnalyze {
 
     public static final int TYPE_VIDEO = 0;
@@ -39,5 +43,38 @@ public class FileAnalyze {
         }
         return UNKNOWN;
     }
+    /*
+    * 测试发现路径有中文会有大问题
+    * pic无法播放
+    * */
+    public  static  String getFileFromChoose(JFrame parent){
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setCurrentDirectory(new File("."));
 
+
+        String pic="",video="",voice="";
+        for (String item : pictureSuffix) {
+            pic+=item+",";
+            }
+        for (String item : videoSuffix) {
+            video+=item+",";
+        }
+        for(String item :voiceSuffix){
+           voice+=item+",";
+        }
+
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("video("+video.substring(0,video.length()-1)+")" ,videoSuffix));
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("image("+pic.substring(0,pic.length()-1)+")" ,pictureSuffix));
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("voice("+voice.substring(0,voice.length()-1)+")" ,voiceSuffix));
+        //如果用户没做选择返回null
+
+        if( 1==chooser.showOpenDialog(parent))
+        {   JOptionPane.showMessageDialog(parent,
+                "未选择");
+            return null; }
+        String path = chooser.getSelectedFile().getAbsolutePath();
+        return path;
+    }
 }

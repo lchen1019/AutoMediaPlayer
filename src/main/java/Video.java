@@ -27,7 +27,22 @@ public class Video extends DynamicMedia {
         videoSlider.init();
         voiceSlider.init();
         videoSlider.refresh();
-
+        class HistoryThread extends Thread{
+            @Override
+            public synchronized void run() {
+                while(true) {
+                    try {
+                        if (videoSlider!=null)
+                        mainPane.setTime( videoSlider.getCurTime());
+                        else
+                            break;
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }}
+        new HistoryThread().start();
         // 添加控制设置
         Box controlBox = Box.createVerticalBox();
         Box upperBox = Box.createHorizontalBox();
