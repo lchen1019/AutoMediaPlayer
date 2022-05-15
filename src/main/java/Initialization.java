@@ -18,9 +18,8 @@ public class Initialization {
         // 构造函数中解析文件成对象
         StringBuilder json = new StringBuilder();
         try {
-            BufferedReader bw = new BufferedReader(new FileReader(new File("D:\\software\\Microsoft_office\\OneDrive\\桌面\\AutoMediaPlayer\\src\\main\\settings.json")));
+            BufferedReader bw = new BufferedReader(new FileReader("D:\\software\\Microsoft_office\\OneDrive\\桌面\\settings.json"));
             String temp = null;
-            System.out.println("asdsd" + temp);
             while ((temp = bw.readLine()) != null) {
                 json.append(temp);
             }
@@ -37,8 +36,7 @@ public class Initialization {
         if (ds == null) {
             System.out.println("未初始化");
             throw new NullPointerException();
-        }
-        return ds;
+        }        return ds;
     }
 
     // 存储修改之后的配置
@@ -47,7 +45,7 @@ public class Initialization {
         System.out.println(str);
         // 写入配置文件
         try {
-            FileWriter fw = new FileWriter("D:\\software\\Microsoft_office\\OneDrive\\桌面\\AutoMediaPlayer\\src\\main\\settings.json");
+            FileWriter fw = new FileWriter("D:\\software\\Microsoft_office\\OneDrive\\桌面\\settings.json");
             fw.write(str);
             fw.flush();
             fw.close();
@@ -60,8 +58,6 @@ public class Initialization {
         Initialization.ds.setVolume(ds.getVolume());
     }
 
-    public static void main(String[] args) {
-        Initialization initialization = new Initialization();
-    }
+
 
 }

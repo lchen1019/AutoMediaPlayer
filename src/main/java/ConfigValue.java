@@ -7,4 +7,6 @@ public class ConfigValue {
     public final static  String setting_icon="./setting_icon.png";
     public final static  String start_icon="./start_icon.png";
     public final static  String music_icon="./music_icon.png";
+    public final static  String setting="./settings.json";
+    public final static  String history_icon="./history_icon.png";
 }

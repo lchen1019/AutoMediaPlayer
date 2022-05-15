@@ -18,11 +18,10 @@ public class VoiceSlider extends Slider{
     public void doResponse(int value) {
         mediaPlayer.audio().setVolume(value);
     }
-
     @Override
     public void init() {
-        // 设置默认音量
         this.setValue(Initialization.getSettings().getVolume());
+        doResponse(Initialization.getSettings().getVolume());
     }
 
 }

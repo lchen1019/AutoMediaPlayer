@@ -7,6 +7,7 @@ public class SettingsPane extends JFrame {
 
     private JFrame mainFrame;
     private DefaultSettings ds;
+
     public SettingsPane(JFrame mainFrame) {
         DefaultSettings origin = Initialization.getSettings();
         try {
@@ -15,20 +16,20 @@ public class SettingsPane extends JFrame {
             e.printStackTrace();
         }
 
-        Image image= Toolkit.getDefaultToolkit().getImage(HistoryPane.class.getClassLoader().getResource(ConfigValue.app_icon));
+        Image image = Toolkit.getDefaultToolkit().getImage(HistoryPane.class.getClassLoader().getResource(ConfigValue.app_icon));
         this.setIconImage(image);
         this.mainFrame = mainFrame;
         setLocationRelativeTo(mainFrame);
         initComponents();
         initStatus();
+        addListener();
         setTitle("Media Player");
-        setBounds(new Rectangle(500,500));
+        setResizable(false);
+        this.setSize(500, 320);
+        setLocation(mainFrame.getX() + mainFrame.getWidth() / 2 - getWidth() / 2, mainFrame.getY() + mainFrame.getHeight() / 2 - getHeight() / 2);
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new SettingsPane(null);
-    }
 
     // 修改默认显示
     private void initStatus() {
@@ -46,8 +47,13 @@ public class SettingsPane extends JFrame {
         save.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int v = ds.getVolume();
+                if (v < 0 || v > 100) {
+                    JOptionPane.showMessageDialog(SettingsPane.this, "音量越界，请输入0-100的数字");
+                    return;
+                }
                 Initialization.updateSettings(ds);
-                JOptionPane.showMessageDialog(SettingsPane.this,"修改成功");
+                JOptionPane.showMessageDialog(SettingsPane.this, "修改成功");
                 SettingsPane.this.setVisible(false);
             }
         });
@@ -69,24 +75,17 @@ public class SettingsPane extends JFrame {
         volume.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                // 更新其中内容
-                System.out.println();
                 try {
                     int v = Integer.parseInt(volume.getText().trim());
                     ds.setVolume(v);
-                    if (v < 0 || v > 100) {
-                        JOptionPane.showMessageDialog(SettingsPane.this,"音量越界，请输入0-100的数字");
-                    }
                 } catch (NumberFormatException ex) {
                     // 弹出对话框，提示数字
-                    JOptionPane.showMessageDialog(SettingsPane.this,"音量格式不对");
+                    JOptionPane.showMessageDialog(SettingsPane.this, "音量格式不对");
                 }
             }
         });
 
     }
-
-
 
 
     private void initComponents() {
@@ -155,7 +154,7 @@ public class SettingsPane extends JFrame {
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+            for (int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -175,7 +174,6 @@ public class SettingsPane extends JFrame {
         sinceGroup.add(sinceNo);
         fullGroup.add(fullYes);
         fullGroup.add(fullNo);
-        addListener();
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables

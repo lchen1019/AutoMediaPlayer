@@ -44,8 +44,8 @@ public class FileAnalyze {
         return UNKNOWN;
     }
     /*
-    * 测试发现路径有中文会有大问题
-    * pic无法播放
+    * 测试发现路径有中文会有大问题 已修复
+    * pic无法播放 可以正常播放
     * */
     public  static  String getFileFromChoose(JFrame parent){
         JFileChooser chooser = new JFileChooser();
@@ -70,10 +70,10 @@ public class FileAnalyze {
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("voice("+voice.substring(0,voice.length()-1)+")" ,voiceSuffix));
         //如果用户没做选择返回null
 
-        if(1 == chooser.showOpenDialog(parent)) {
-            JOptionPane.showMessageDialog(parent, "未选择");
-            return null;
-        }
+        if( 1==chooser.showOpenDialog(parent))
+        {   JOptionPane.showMessageDialog(parent,
+                "未选择");
+            return null; }
         String path = chooser.getSelectedFile().getAbsolutePath();
         return path;
     }

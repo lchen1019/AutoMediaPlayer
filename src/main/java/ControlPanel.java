@@ -58,11 +58,13 @@ public class ControlPanel extends JPanel {
         full.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                media.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                media.getGraphicsConfiguration().getDevice()
-                        .setFullScreenWindow(media);
+               // media.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//                media.getGraphicsConfiguration().getDevice()
+//                        .setFullScreenWindow(media);
                 media.setLocationRelativeTo(null);
-                media.setUndecorated(true);
+                media.setLocation(0,0);
+            //    media.setUndecorated(true);
+                media.setSize(Toolkit.getDefaultToolkit().getScreenSize());
                 media.setAlwaysOnTop(true);
                 media.setResizable(false);
             }
@@ -70,9 +72,11 @@ public class ControlPanel extends JPanel {
         minScreen.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                media.setExtendedState(JFrame.NORMAL);
                 media.setBounds(new Rectangle(800, 500));
                 media.setLocationRelativeTo(null);
-                media.setUndecorated(false);
+                media.setAlwaysOnTop(false);
+//                media.setUndecorated(false);
                 media.setResizable(true);
             }
         });
@@ -100,13 +104,14 @@ public class ControlPanel extends JPanel {
             speed.addItem(item);
         }
         speed.select(2);
+
         front = new JButton(">>");
         start = new JButton("开始");
         back = new JButton("<<");
 
 
         full = new JButton("全屏");
-        minScreen = new JButton("最小窗");
+        minScreen = new JButton("小窗");
 
         // left
         JPanel leftPanel = new JPanel();

@@ -8,6 +8,7 @@ public class Video extends DynamicMedia {
 
     public Video(MainPane mainPane, JPanel panel, EmbeddedMediaPlayerComponent mediaPlayerComponent, String path) {
         this.panel = panel;
+        this.curTimeLabel = new JLabel("00:00");
         panel.removeAll();
         panel.add(mediaPlayerComponent, BorderLayout.CENTER);
         this.mediaPlayer = mediaPlayerComponent.mediaPlayer();
@@ -17,7 +18,7 @@ public class Video extends DynamicMedia {
         this.voiceSlider = new VoiceSlider(mediaPlayer);
         this.videoSlider = new VideoSlider(mediaPlayer);
         this.mainPane = mainPane;
-        this.controlPanel = new ControlPanel(mainPane, mediaPlayer , voiceSlider);
+        this.controlPanel = new ControlPanel(mainPane, mediaPlayer, voiceSlider);
     }
 
     @Override
@@ -27,25 +28,30 @@ public class Video extends DynamicMedia {
         videoSlider.init();
         voiceSlider.init();
         videoSlider.refresh();
-        class HistoryThread extends Thread{
+
+        class HistoryThread extends Thread {
             @Override
             public synchronized void run() {
-                while(true) {
+                while (true) {
                     try {
-                        if (videoSlider!=null)
-                        mainPane.setTime( videoSlider.getCurTime());
-                        else
+                        if (videoSlider != null) {
+                            mainPane.setTime(videoSlider.getCurTime());
+                            curTimeLabel.setText(calcTime(videoSlider.getCurTime()));
+                        } else {
                             break;
+                        }
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-            }}
+            }
+        }
         new HistoryThread().start();
         // 添加控制设置
         Box controlBox = Box.createVerticalBox();
         Box upperBox = Box.createHorizontalBox();
+        upperBox.add(curTimeLabel);
         upperBox.add(videoSlider);
         upperBox.add(new JLabel(calcTime(videoSlider.getLength())));
         controlBox.add(upperBox);

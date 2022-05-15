@@ -9,6 +9,7 @@ public abstract class DynamicMedia extends Media {
     protected VoiceSlider voiceSlider = null;
     protected VideoSlider videoSlider = null;
     protected MainPane mainPane = null;
+    protected JLabel curTimeLabel;
 
     protected String calcTime(long length) {
         String minutes = (length / 1000) / 60 + "";

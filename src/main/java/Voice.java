@@ -7,6 +7,7 @@ public class Voice extends DynamicMedia {
 
 
     public Voice(MainPane mainPane, JPanel panel, EmbeddedMediaPlayerComponent mediaPlayerComponent, String path) {
+        this.curTimeLabel = new JLabel("00:00");
         this.panel = panel;
         panel.removeAll();
         panel.add(mediaPlayerComponent, BorderLayout.CENTER);
@@ -22,8 +23,6 @@ public class Voice extends DynamicMedia {
 
     @Override
     public void play() {
-
-
         videoSlider.init();
         voiceSlider.init();
         videoSlider.refresh();
@@ -32,7 +31,8 @@ public class Voice extends DynamicMedia {
             public synchronized void run() {
                 while(true) {
                     try {
-                        mainPane.setTime( videoSlider.getCurTime());
+                        mainPane.setTime(videoSlider.getCurTime());
+                        curTimeLabel.setText(calcTime(videoSlider.getCurTime()));
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -41,15 +41,17 @@ public class Voice extends DynamicMedia {
             }}
         new HistoryThread().start();
         panel.removeAll();
-        JLabel label = new JLabel();
+
         ImageIcon imageIcon = new ImageIcon(HistoryPane.class.getClassLoader().getResource(ConfigValue.music_icon));
-        label.setIcon(imageIcon);
+        JLabel label = new JLabel(imageIcon);
+        label.setTransferHandler(mainPane.getPullFiler());
         panel.add(label, BorderLayout.CENTER);
 
         // 添加控制设置
         Box controlBox = Box.createVerticalBox();
         Box upperBox = Box.createHorizontalBox();
         upperBox.add(videoSlider);
+        upperBox.add(curTimeLabel);
         upperBox.add(Box.createHorizontalStrut(1));
         upperBox.add(new JLabel(calcTime(videoSlider.getLength())));
         upperBox.add(Box.createHorizontalStrut(1));

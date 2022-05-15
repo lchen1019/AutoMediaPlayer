@@ -10,6 +10,6 @@ public abstract class Media {
     public String location = null;
     public EmbeddedMediaPlayer mediaPlayer = null;
     public JPanel panel = null;
-
+    public void setTime(long time){}
     public abstract void play();
 }
