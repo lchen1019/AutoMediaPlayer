@@ -7,8 +7,8 @@ public class Voice extends DynamicMedia {
 
 
     public Voice(MainPane mainPane, JPanel panel, EmbeddedMediaPlayerComponent mediaPlayerComponent, String path) {
-        this.curTimeLabel = new JLabel("00:00");
         this.panel = panel;
+        this.curTimeLabel = new JLabel("00:00");
         panel.removeAll();
         panel.add(mediaPlayerComponent, BorderLayout.CENTER);
         this.mediaPlayer = mediaPlayerComponent.mediaPlayer();
@@ -50,11 +50,11 @@ public class Voice extends DynamicMedia {
         // 添加控制设置
         Box controlBox = Box.createVerticalBox();
         Box upperBox = Box.createHorizontalBox();
-        upperBox.add(videoSlider);
         upperBox.add(curTimeLabel);
-        upperBox.add(Box.createHorizontalStrut(1));
+//        upperBox.add(Box.createHorizontalStrut(1));
+        upperBox.add(videoSlider);
         upperBox.add(new JLabel(calcTime(videoSlider.getLength())));
-        upperBox.add(Box.createHorizontalStrut(1));
+//        upperBox.add(Box.createHorizontalStrut(1));
         controlBox.add(upperBox);
         controlBox.add(Box.createVerticalStrut(5));
         controlBox.add(controlPanel);
