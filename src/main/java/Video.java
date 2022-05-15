@@ -27,6 +27,7 @@ public class Video extends DynamicMedia {
         videoSlider.init();
         voiceSlider.init();
         videoSlider.refresh();
+
         class HistoryThread extends Thread{
             @Override
             public synchronized void run() {

@@ -24,9 +24,14 @@ public class History {
         String res=url+"*"+time+"\n";
         boolean is=false;
         int i=0;
+
         for (String str:
              history) {
-            if(str.indexOf(url)!=-1)
+            if(str==null) {
+                history.remove(i);
+                continue;
+            }
+            if(str!=null&&str.indexOf(url)!=-1)
             {
                 history.remove(i);
                 break;
@@ -40,6 +45,7 @@ public class History {
         for (String str:
               history) {
             try {
+                if (str!=null && !"\n".equals(str))
                 fileOutputStream.write(str.getBytes());
                 System.out.println(str);
             } catch (IOException e) {
@@ -82,6 +88,7 @@ public class History {
                 if(!"".equals(strings))
                 {
                     history.add(str+"\n");
+
                 }
             }
 

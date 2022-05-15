@@ -10,6 +10,7 @@ import java.awt.image.BaseMultiResolutionImage;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Vector;
 import javax.swing.*;
 
 
@@ -54,6 +55,7 @@ public class MainPane extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 mediaPlayerComponent.release();
+                if(nowPlayFile!=null)
                 history.addHistory(nowPlayFile,time);
                 history.flushToFile();
                 System.exit(0);
@@ -76,7 +78,6 @@ public class MainPane extends JFrame {
     }
    private void play(String path){
        Media media = null;
-       time=0;
        if(path==null)
            return;
        if (FileAnalyze.analyzeFileType(path) == FileAnalyze.TYPE_VIDEO) {
@@ -92,10 +93,27 @@ public class MainPane extends JFrame {
            System.out.println("格式不支持");
            return;
        }
-       history.addHistory(path,time);
+
+       Vector<String> vector=history.getHistory();
+       long temp=0;
+       for (String str:
+            vector) {
+           if(str.indexOf(path)!=-1)
+           {
+           //    System.out.println(str);
+               str.substring(str.indexOf("*")+1,str.length()-1);
+               temp=Long.parseLong(str.substring(str.indexOf("*")+1,str.length()-1));
+               System.out.println("time"+temp);
+               break;
+           }
+       }
        nowPlayFile=path;
        mediaPlayerComponent.mediaPlayer().controls().nextFrame();
+    //   System.out.println("time1:"+time);
        media.play();
+     //  System.out.println("setTime"+temp);
+       time=temp;
+       mediaPlayerComponent.mediaPlayer().controls().setTime(time);
    }
 
     private void initComponents() {

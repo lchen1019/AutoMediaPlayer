@@ -7,6 +7,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Vector;
 
@@ -103,6 +105,13 @@ public class StartPane extends JFrame {
         jScrollPane.setViewportView(jList);
         jPanel.add(jScrollPane);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                history.flushToFile();
+                System.exit(0);
+            }
+        });
         add(btn3);
         add(btn2);
         add(jL1);

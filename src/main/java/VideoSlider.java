@@ -32,11 +32,11 @@ public class VideoSlider extends Slider{
             while(true) {
                 try {
                     if (mediaPlayer!=null&&mediaPlayer.status()!=null)
-                    curTime = mediaPlayer.status().time();
+                        curTime = mediaPlayer.status().time();
                     else
                         break;
                     that.setValue((int) ((double) curTime / length * exp));
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
